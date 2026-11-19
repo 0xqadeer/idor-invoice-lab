@@ -1,0 +1,23 @@
+services:
+  web:
+    build: .
+    container_name: idor-php-lab
+    ports:
+      - "127.0.0.1:8080:80"
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    container_name: idor-mysql-lab
+    environment:
+      MYSQL_ROOT_PASSWORD: labroot123
+      MYSQL_DATABASE: idor_lab
+      MYSQL_USER: labuser
+      MYSQL_PASSWORD: labpass123
+    volumes:
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - mysql_data:/var/lib/mysql
+
+volumes:
+  mysql_data:
